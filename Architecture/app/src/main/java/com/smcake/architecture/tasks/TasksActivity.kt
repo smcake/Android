@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
 import com.smcake.architecture.R
+import com.smcake.architecture.util.ActivityUtils
 import kotlinx.android.synthetic.main.tasks_act.*
 
 /**
@@ -19,6 +20,18 @@ class TasksActivity : AppCompatActivity() {
 
         setToolbar()
         setupNavigationDrawer()
+
+        val tasksFragment = findOrCreateViewFragment()
+    }
+
+    private fun findOrCreateViewFragment() : TasksFragment {
+        var tasksFragment = supportFragmentManager.findFragmentById(R.id.contentFrame) as TasksFragment
+        if (tasksFragment == null) {
+            tasksFragment = TasksFragment.newInstance()
+            ActivityUtils.addFragmentToActivity(
+                supportFragmentManager, tasksFragment, R.id.contentFrame)
+        }
+        return tasksFragment
     }
 
     private fun setToolbar() {
